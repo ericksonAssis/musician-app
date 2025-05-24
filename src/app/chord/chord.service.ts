@@ -1,35 +1,45 @@
 // src/app/chord/chord.service.ts
 import { Injectable } from '@angular/core';
 
-interface FretPosition {
+export interface FretPosition {
   string: number;
   fret: number;
   note: string;
 }
 
-@Injectable({ providedIn: 'root' })
-export class ChordService {
-  private chordDatabase: { [name: string]: FretPosition[] } = {};
-
-  saveChord(name: string, positions: FretPosition[]): void {
-    console.log("saveChord: name: " + name);
-    this.chordDatabase[name.trim()] = [...positions];
-  }
-
-  getChord(name: string): FretPosition[] | undefined {
-    console.log("getChrod: name: " + name);
-    return this.chordDatabase[name.trim()];
-  }
-
-  getAllChords(): { [name: string]: FretPosition[] } {
-    return this.chordDatabase;
-  }
+export interface ChordShape {
+  name: string;
+  version: number;
+  positions: FretPosition[];
 }
 
 
+@Injectable({ providedIn: 'root' })
+export class ChordService {
+  private chordDatabase: { [name: string]: ChordShape[] } = {};
 
+  saveChord(name: string, positions: FretPosition[]): void {
 
+    console.log("saveChord: name: " + name);
+    const version = (this.chordDatabase[name]?.length || 0) + 1;
+    const newShape: ChordShape = {
+      name: name.trim(),
+      version,
+        positions: [...positions]
+      };
 
+      if (!this.chordDatabase[name]) {
+        this.chordDatabase[name] = [];
+      }
 
+      this.chordDatabase[name].push(newShape);
+    }
 
+    getChord(name: string): ChordShape[] {
+      return this.chordDatabase[name.trim()] || [];
+    }
 
+    getAllChords(): { [name: string]: ChordShape[] } {
+      return this.chordDatabase;
+    }
+  }

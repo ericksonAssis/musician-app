@@ -2,3 +2,22 @@
   <input [(ngModel)]="chordName" placeholder="Buscar acorde" />
   <button (click)="search()">Buscar</button>
 </div>
+
+<div *ngIf="chordShapes.length > 0">
+  <div *ngFor="let shape of chordShapes; let shapeIndex = index" class="chord-shape">
+    <h4>{{ shape.name }} - Shape {{ shape.version }}</h4>
+    <div class="fretboard-mini">
+       
+        
+        <div *ngFor="let tune of tuning; let s = index" >
+          <button
+            *ngFor="let fret of frets; let f = index">
+            <div [class.selected]="shape.positions && shape.positions.length > 0 && shape.name === chordName && shape.positions[s] != null && shape.positions[s].string === s &&  shape.positions[s].fret === f">
+            {{ getNote(tune, f)  }}
+            </div>
+          </button>
+        
+      </div>
+    </div>
+  </div>
+</div>

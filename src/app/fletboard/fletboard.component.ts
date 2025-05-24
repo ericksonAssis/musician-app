@@ -3,10 +3,16 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChordService } from '../chord/chord.service';
 
-interface FletPosition {
+export interface FretPosition {
   string: number;
   fret: number;
   note: string;
+}
+
+export interface ChordShape {
+  name: string;
+  version: number;
+  positions: FretPosition[];
 }
 
 @Component({
@@ -20,8 +26,9 @@ export class FletboardComponent {
   frets: number[] = Array.from({ length: 13 }, (_, i) => i);
   notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-  selectedFrets: FletPosition[] = [];
-  
+  selectedFrets: FretPosition[] = [];
+  selectedChordShapes: ChordShape[] = [];
+
   chordName: string = '';
 
   constructor(private chordService: ChordService) {}
@@ -38,7 +45,7 @@ export class FletboardComponent {
     if (exists) {
       this.selectedFrets = this.selectedFrets.filter(sel => !(sel.string === stringIndex && sel.fret === fret));
     } else {
-      this.selectedFrets.push({ string: stringIndex, fret, note });
+      this.selectedFrets.push({ string: stringIndex, fret, note});
     }
   }
 
@@ -47,13 +54,31 @@ export class FletboardComponent {
   }
 
   salvarAcorde(): void {
-    if (!this.chordName.trim()) {
-      alert('Informe um nome para o acorde.');
-      return;
+     if (!this.chordName.trim()) {
+        alert('Informe um nome para o acorde.');
+        return;
+      }
+
+
+    const completePositions = [];
+
+    for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+      const selected = this.selectedFrets.find(p => p.string === stringIndex);
+
+      if (selected) {
+        completePositions.push({ ...selected });
+      } else {
+        completePositions.push({
+          string: stringIndex,
+          fret: -1,
+          note: ''
+        });
+      }
     }
 
-    this.chordService.saveChord(this.chordName, this.selectedFrets);
+    this.chordService.saveChord(this.chordName, completePositions);
     console.log(`Acorde "${this.chordName}" salvo com sucesso.`);
+
     this.chordName = '';
     this.selectedFrets = [];
   }
@@ -63,7 +88,7 @@ export class FletboardComponent {
     console.log("carregarAcorde nome: " + nome);
     const acorde = this.chordService.getChord(nome);
     if (acorde) {
-      this.selectedFrets = [...acorde];
+      this.selectedChordShapes = [...acorde];
     } else {
       alert('Acorde não encontrado!');
     }

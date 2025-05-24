@@ -1,6 +1,6 @@
 // src/app/search-chord/search-chord.component.ts
 import { Component } from '@angular/core';
-import { ChordService } from '../chord/chord.service';
+import { ChordService, ChordShape } from '../chord/chord.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,19 +12,29 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchChordComponent {
   chordName: string = '';
+  chordShapes: ChordShape[] = [];
+
+  tuning: string[] = ['E', 'A', 'D', 'G', 'B', 'E'];
+  frets: number[] = Array.from({ length: 13 }, (_, i) => i);
+  notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
   constructor(private chordService: ChordService) {}
 
   search(): void {
-    console.log("chordName :" + this.chordName);
-    const chord = this.chordService.getChord(this.chordName);
-    if (!chord) {
+    const chords = this.chordService.getChord(this.chordName);
+    if (!chords || chords.length === 0) {
       alert('Acorde não encontrado.');
+      this.chordShapes = [];
     } else {
-      // Emite evento ou chama método em outro componente
-      // Exemplo temporário:
-      console.log(`Acorde encontrado: ${this.chordName}`, chord);
-      // Aqui você pode emitir via EventEmitter ou usar um serviço com Observable
+      this.chordShapes = chords;
+      console.log(`Acordes encontrados para ${this.chordName}:`, chords);
     }
   }
+
+  
+  getNote(openNote: string, fret: number): string {
+    const index = this.notes.indexOf(openNote);
+    return this.notes[(index + fret) % 12];
+  }
+
 }

@@ -3,9 +3,23 @@
   display: flex;
   gap: 8px;
 }
-input {
-  padding: 4px;
+
+.chord-shape {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
 }
-button {
-  padding: 4px 8px;
+
+.fretboard-mini {
+  font-family: monospace;
+  margin-top: 8px;
+}
+
+.selected {
+  background-color: #4CAF50;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-right: 2px;
 }
