@@ -1,0 +1,11 @@
+.search-box {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+}
+input {
+  padding: 4px;
+}
+button {
+  padding: 4px 8px;
+}

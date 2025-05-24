@@ -1,0 +1,15 @@
+<div class="fletboard">
+  <div *ngFor="let tune of tuning; let s = index" >
+    <button
+      *ngFor="let fret of frets; let f = index"
+      (click)="toggleFret(s, f)"
+      [class.selected]="isSelected(s, f)">
+      {{ getNote(tune, f) }}
+    </button>
+  </div>
+</div>
+
+<div class="actions">
+  <input type="text" placeholder="Nome do acorde" [(ngModel)]="chordName" />
+  <button (click)="salvarAcorde()">Salvar Acorde</button>
+</div>
