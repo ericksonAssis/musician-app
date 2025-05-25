@@ -9,15 +9,15 @@
     <div class="fretboard-mini">
        
         
-        <div *ngFor="let tune of tuning; let s = index" >
-          <button
-            *ngFor="let fret of frets; let f = index">
-            <div [class.selected]="shape.positions && shape.positions.length > 0 && shape.name === chordName && shape.positions[s] != null && shape.positions[s].string === s &&  shape.positions[s].fret === f">
-            {{ getNote(tune, f)  }}
+          <button *ngFor="let fret of frets; let f = index">
+            <span>{{f}}</span>
+            <div *ngFor="let tune of tuning; let s = index" >
+                  
+              <div [class.selected]="shape.positions && shape.positions.length > 0 && shape.name === chordName && shape.positions[s] != null && shape.positions[s].string === s &&  shape.positions[s].fret === f">
+                {{ getNote(tune, f)  }}
+              </div>
             </div>
           </button>
-        
-      </div>
     </div>
   </div>
 </div>

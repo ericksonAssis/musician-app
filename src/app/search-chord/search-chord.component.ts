@@ -14,7 +14,8 @@ export class SearchChordComponent {
   chordName: string = '';
   chordShapes: ChordShape[] = [];
 
-  tuning: string[] = ['E', 'A', 'D', 'G', 'B', 'E'];
+//  tuning: string[] = ['E', 'A', 'D', 'G', 'B', 'E'];
+  tuning: string[] = ['E', 'B', 'G', 'D', 'A', 'E'];
   frets: number[] = Array.from({ length: 13 }, (_, i) => i);
   notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 

@@ -1,0 +1,10 @@
+<div>
+  <label for="key">Tonalidade:</label>
+  <select id="key" [(ngModel)]="selectedKey" (change)="updateProgressions()">
+    <option *ngFor="let key of keys" [value]="key">{{ key }}</option>
+  </select>
+</div>
+
+<div *ngFor="let progression of progressions">
+  <strong>{{ progression.label }}</strong>: {{ progression.chords.join(' - ') }}
+</div>

@@ -1,0 +1,17 @@
+.harmonic-field {
+  margin-top: 20px;
+}
+
+.chords {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.chords li {
+  background: #e0f7fa;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}

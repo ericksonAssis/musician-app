@@ -1,0 +1,12 @@
+<div class="harmonic-field">
+  <h3>Campo Harmônico Maior</h3>
+
+  <label for="key-select">Tonalidade:</label>
+  <select id="key-select" [(ngModel)]="selectedKey" (change)="updateChords()">
+    <option *ngFor="let note of notes" [value]="note">{{ note }}</option>
+  </select>
+
+  <ul class="chords">
+    <li *ngFor="let chord of majorScaleChords">{{ chord }}</li>
+  </ul>
+</div>
